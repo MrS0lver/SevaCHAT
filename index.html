@@ -245,62 +245,76 @@
                 return null;
             }
         }
+
+
+        ////   THIS PART IS A RANDOM SHIT STAY AWAY FROM HERE 
+//         async function getBotResponse(userMessage) {
+//     showTypingIndicator();
+//     sendBtn.disabled = true;
+
+//     let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
+//     let success = false;
+
+//     // Add your custom personality prompt here
+//     const personalityPrompt = `Act Like A ChatBot For HealthCare and Diseases People wil come And ask anything related Medichal field if they ask other than medic and healthcare just say - "I'm sorry, I can only provide information related to health and medical topics"`;
+
+//     // Try each API endpoint until one works
+//     for (const model of API_ENDPOINTS) {
+//         const result = await tryApiCall(personalityPrompt, model);
+//         if (result) {
+//             botReply = result;
+//             success = true;
+//             console.log(`Success with model: ${model}`);
+//             break;
+//         }
+//     }
+
+//     hideTypingIndicator();
+//     appendMessage(botReply, "bot");
+//     sendBtn.disabled = false;
+
+//     if (!success) {
+//         appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
+//     }
+// }
+
+//// IGNORE THIS PART RANDOM SHIT 
+
+
+
+
+
         async function getBotResponse(userMessage) {
-    showTypingIndicator();
-    sendBtn.disabled = true;
+            showTypingIndicator();
+            sendBtn.disabled = true;
 
-    let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
-    let success = false;
+            let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
+            let success = false;
 
-    // Add your custom personality prompt here
-    const personalityPrompt = `Act Like A ChatBot For HealthCare and Diseases People wil come And ask anything related Medichal field if they ask other than medic and healthcare just say - "I'm sorry, I can only provide information related to health and medical topics"`;
+            // Try each API endpoint until one works
+            for (const model of API_ENDPOINTS) {
+                const result = await tryApiCall(userMessage, model);
+                if (result) {
+                    botReply = result;
+                    success = true;
+                    console.log(`Success with model: ${model}`);
+                    break;
+                }
+            }
 
-    // Try each API endpoint until one works
-    for (const model of API_ENDPOINTS) {
-        const result = await tryApiCall(personalityPrompt, model);
-        if (result) {
-            botReply = result;
-            success = true;
-            console.log(`Success with model: ${model}`);
-            break;
+            hideTypingIndicator();
+            appendMessage(botReply, "bot");
+            sendBtn.disabled = false;
+
+            if (!success) {
+                appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
+            }
         }
-    }
 
-    hideTypingIndicator();
-    appendMessage(botReply, "bot");
-    sendBtn.disabled = false;
 
-    if (!success) {
-        appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
-    }
-}
 
-        // async function getBotResponse(userMessage) {
-        //     showTypingIndicator();
-        //     sendBtn.disabled = true;
 
-        //     let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
-        //     let success = false;
 
-        //     // Try each API endpoint until one works
-        //     for (const model of API_ENDPOINTS) {
-        //         const result = await tryApiCall(userMessage, model);
-        //         if (result) {
-        //             botReply = result;
-        //             success = true;
-        //             console.log(`Success with model: ${model}`);
-        //             break;
-        //         }
-        //     }
-
-        //     hideTypingIndicator();
-        //     appendMessage(botReply, "bot");
-        //     sendBtn.disabled = false;
-
-        //     if (!success) {
-        //         appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
-        //     }
-        // }
 
         function handleSendMessage() {
             const message = userInput.value.trim();
