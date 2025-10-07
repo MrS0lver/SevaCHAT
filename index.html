@@ -183,6 +183,45 @@
             color: white;
         }
         
+        /* Medical response styling */
+        .step-container {
+            margin: 15px 0;
+        }
+        
+        .step-title {
+            font-weight: bold;
+            color: #1a936f;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .step-content {
+            margin-left: 10px;
+        }
+        
+        .step-list {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+        
+        .step-list li {
+            margin-bottom: 5px;
+        }
+        
+        .important-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        
+        .follow-up-question {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #1a936f;
+        }
+        
         /* Scrollbar styling */
         #chat-box::-webkit-scrollbar {
             width: 6px;
@@ -265,31 +304,61 @@
         // Try different model endpoints in order of preference
         const API_ENDPOINTS = [
             'gemini-2.5-flash'
-            // 'gemini-1.5-flash',
-            // 'gemini-1.5-pro'
         ];
 
-        // Medical context prompt
+        // Medical context prompt with step-by-step formatting instructions
         const MEDICAL_PROMPT = `You are Dr. MediCare AI, a professional and empathetic virtual healthcare assistant. Follow these guidelines strictly:
 
 1. ONLY answer health and medical-related questions
 2. If asked about non-medical topics, politely respond: "I'm specialized in healthcare and can only answer medical questions. Is there a health concern I can help with?"
 3. Provide accurate, evidence-based medical information
 4. Always include a disclaimer that you're an AI and not a substitute for professional medical care
-5. Ask follow-up questions to better understand symptoms when appropriate
-6. Be empathetic and reassuring in your tone
-7. Suggest seeing a doctor for serious symptoms
-8. Keep responses clear and concise but thorough enough to be helpful
-9. End most responses with a relevant follow-up question to continue the conversation
+5. Structure your responses in CLEAR, NUMBERED STEPS with proper formatting
+6. Use HTML-like tags for structure but render them as plain text:
+   - Use **Step 1: Title** for each step
+   - Use bullet points with * for lists
+   - Use **Important Note:** for warnings
+   - Use **Follow-up Question:** at the end
+7. Be empathetic and reassuring in your tone
+8. Suggest seeing a doctor for serious symptoms
+9. Keep responses clear and concise but thorough enough to be helpful
+10. End most responses with a relevant follow-up question to continue the conversation
 
 Current user question: `;
 
         function appendMessage(text, sender) {
             const msg = document.createElement("div");
             msg.classList.add("message", sender);
-            msg.innerHTML = text;
+            
+            if (sender === "bot") {
+                // Format the bot's response with proper styling
+                msg.innerHTML = formatMedicalResponse(text);
+            } else {
+                msg.textContent = text;
+            }
+            
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function formatMedicalResponse(text) {
+            // Convert the AI's response to properly formatted HTML
+            let formattedText = text;
+            
+            // Format step titles
+            formattedText = formattedText.replace(/\*\*Step (\d+): (.*?)\*\*/g, '<div class="step-title">Step $1: $2</div>');
+            
+            // Format lists
+            formattedText = formattedText.replace(/\* (.*?)(?=\n|$)/g, '<li>$1</li>');
+            formattedText = formattedText.replace(/(<li>.*<\/li>)/s, '<ul class="step-list">$1</ul>');
+            
+            // Format important notes
+            formattedText = formattedText.replace(/\*\*Important Note:\*\* (.*?)(?=\n\n|\n\*\*|$)/s, '<div class="important-note"><strong>Important Note:</strong> $1</div>');
+            
+            // Format follow-up questions
+            formattedText = formattedText.replace(/\*\*Follow-up Question:\*\* (.*?)(?=\n\n|$)/s, '<div class="follow-up-question">Follow-up Question: $1</div>');
+            
+            return formattedText;
         }
 
         function showTypingIndicator() {
