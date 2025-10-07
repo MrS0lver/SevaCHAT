@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEVA Chat</title>
+    <title>MediCare AI - Your Virtual Health Assistant</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a936f 0%, #88d498 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -25,30 +25,51 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .chat-header {
-            background: #2d3748;
+            background: #1a936f;
             color: white;
             padding: 20px;
             text-align: center;
+            position: relative;
         }
         
         .chat-header h1 {
             font-size: 24px;
             margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .chat-header p {
-            opacity: 0.8;
+            opacity: 0.9;
             font-size: 14px;
         }
         
+        .doctor-icon {
+            font-size: 28px;
+        }
+        
+        .disclaimer {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px 15px;
+            font-size: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ffeaa7;
+        }
+        
         #chat-box {
-            height: 500px;
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: #f7fafc;
+            background: #f8f9fa;
         }
         
         .message {
@@ -58,6 +79,7 @@
             max-width: 80%;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in;
+            line-height: 1.4;
         }
         
         @keyframes fadeIn {
@@ -73,14 +95,15 @@
         }
         
         .bot {
-            background: #e2e8f0;
-            color: #2d3748;
+            background: #e9f7ef;
+            color: #1a936f;
             margin-right: auto;
             border-bottom-left-radius: 5px;
+            border-left: 3px solid #1a936f;
         }
         
         .typing {
-            background: #e2e8f0;
+            background: #e9f7ef;
             color: #718096;
             font-style: italic;
             margin-right: auto;
@@ -106,22 +129,25 @@
         }
         
         #user-input:focus {
-            border-color: #007bff;
+            border-color: #1a936f;
         }
         
         #send-btn {
             padding: 12px 24px;
-            background: #007bff;
+            background: #1a936f;
             color: white;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         #send-btn:hover {
-            background: #0056b3;
+            background: #147a5f;
         }
         
         #send-btn:disabled {
@@ -133,6 +159,28 @@
             background: #fed7d7;
             color: #c53030;
             border: 1px solid #feb2b2;
+        }
+        
+        .symptom-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .symptom-chip {
+            background: #e9f7ef;
+            color: #1a936f;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .symptom-chip:hover {
+            background: #1a936f;
+            color: white;
         }
         
         /* Scrollbar styling */
@@ -152,24 +200,57 @@
         #chat-box::-webkit-scrollbar-thumb:hover {
             background: #a8a8a8;
         }
+        
+        .medical-icon {
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .chat-container {
+                height: 95vh;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .symptom-suggestions {
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h1>SEVA ChatBot</h1>
-            <p>Powered by Google Gemini AI</p>
+            <h1><span class="doctor-icon">👨‍⚕️</span> MediCare AI</h1>
+            <p>Your Virtual Health Assistant - Here to help with medical questions</p>
+        </div>
+        
+        <div class="disclaimer">
+            <strong>Important:</strong> This is an AI assistant for informational purposes only. 
+            It is not a substitute for professional medical advice. Always consult a healthcare provider for medical concerns.
         </div>
         
         <div id="chat-box">
             <div class="message bot">
-                👋 Hello! I'm SEVA HealthCare AI assistant. How can I help you today?
+                <span class="medical-icon">👋</span> Hello! I'm Dr. MediCare AI, your virtual health assistant. 
+                I'm here to help answer your medical questions, provide health information, and offer general wellness advice.
+                <br><br>
+                <strong>How can I assist with your health concerns today?</strong>
+                <div class="symptom-suggestions">
+                    <div class="symptom-chip" data-symptom="headache">Headache</div>
+                    <div class="symptom-chip" data-symptom="fever">Fever</div>
+                    <div class="symptom-chip" data-symptom="cough">Cough</div>
+                    <div class="symptom-chip" data-symptom="stomach pain">Stomach Pain</div>
+                </div>
             </div>
         </div>
         
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
-            <button id="send-btn">Send</button>
+            <input type="text" id="user-input" placeholder="Describe your symptoms or ask a health question..." autocomplete="off">
+            <button id="send-btn"><span>Send</span> 💊</button>
         </div>
     </div>
 
@@ -184,12 +265,29 @@
         // Try different model endpoints in order of preference
         const API_ENDPOINTS = [
             'gemini-2.5-flash'
+            // 'gemini-1.5-flash',
+            // 'gemini-1.5-pro'
         ];
+
+        // Medical context prompt
+        const MEDICAL_PROMPT = `You are Dr. MediCare AI, a professional and empathetic virtual healthcare assistant. Follow these guidelines strictly:
+
+1. ONLY answer health and medical-related questions
+2. If asked about non-medical topics, politely respond: "I'm specialized in healthcare and can only answer medical questions. Is there a health concern I can help with?"
+3. Provide accurate, evidence-based medical information
+4. Always include a disclaimer that you're an AI and not a substitute for professional medical care
+5. Ask follow-up questions to better understand symptoms when appropriate
+6. Be empathetic and reassuring in your tone
+7. Suggest seeing a doctor for serious symptoms
+8. Keep responses clear and concise but thorough enough to be helpful
+9. End most responses with a relevant follow-up question to continue the conversation
+
+Current user question: `;
 
         function appendMessage(text, sender) {
             const msg = document.createElement("div");
             msg.classList.add("message", sender);
-            msg.textContent = text;
+            msg.innerHTML = text;
             chatBox.appendChild(msg);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -197,7 +295,7 @@
         function showTypingIndicator() {
             const typing = document.createElement("div");
             typing.classList.add("message", "typing");
-            typing.textContent = "Thinking...";
+            typing.textContent = "Dr. MediCare AI is thinking...";
             typing.id = "typing-indicator";
             chatBox.appendChild(typing);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -212,7 +310,6 @@
 
         async function tryApiCall(message, model) {
             const API_URL = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${API_KEY}`;
-            
             try {
                 const response = await fetch(API_URL, {
                     method: "POST",
@@ -221,7 +318,7 @@
                     },
                     body: JSON.stringify({
                         contents: [{
-                            parts: [{ text: message }]
+                            parts: [{ text: MEDICAL_PROMPT + message }]
                         }],
                         generationConfig: {
                             temperature: 0.7,
@@ -231,10 +328,9 @@
                         }
                     })
                 });
-
                 if (response.ok) {
                     const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here, but I don't have a response right now.";
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help with your health concerns. Could you please tell me more about your symptoms?";
                 } else {
                     const errorData = await response.json();
                     console.error(`API Error for ${model}:`, errorData);
@@ -246,49 +342,11 @@
             }
         }
 
-
-        ////   THIS PART IS A RANDOM SHIT STAY AWAY FROM HERE 
-//         async function getBotResponse(userMessage) {
-//     showTypingIndicator();
-//     sendBtn.disabled = true;
-
-//     let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
-//     let success = false;
-
-//     // Add your custom personality prompt here
-//     const personalityPrompt = `Act Like A ChatBot For HealthCare and Diseases People wil come And ask anything related Medichal field if they ask other than medic and healthcare just say - "I'm sorry, I can only provide information related to health and medical topics"`;
-
-//     // Try each API endpoint until one works
-//     for (const model of API_ENDPOINTS) {
-//         const result = await tryApiCall(personalityPrompt, model);
-//         if (result) {
-//             botReply = result;
-//             success = true;
-//             console.log(`Success with model: ${model}`);
-//             break;
-//         }
-//     }
-
-//     hideTypingIndicator();
-//     appendMessage(botReply, "bot");
-//     sendBtn.disabled = false;
-
-//     if (!success) {
-//         appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
-//     }
-// }
-
-//// IGNORE THIS PART RANDOM SHIT 
-
-
-
-
-
         async function getBotResponse(userMessage) {
             showTypingIndicator();
             sendBtn.disabled = true;
 
-            let botReply = "Sorry, I'm unable to connect to the AI service right now. Please check your API key and try again.";
+            let botReply = "I'm currently experiencing technical difficulties. Please try again in a moment or consult a healthcare provider for urgent concerns.";
             let success = false;
 
             // Try each API endpoint until one works
@@ -307,14 +365,9 @@
             sendBtn.disabled = false;
 
             if (!success) {
-                appendMessage("💡 Tip: Make sure your API key is valid and you have access to Gemini API models.", "bot");
+                appendMessage("💡 <strong>Technical Note:</strong> Please ensure your API key is valid and you have access to Gemini API models. For immediate health concerns, please contact a healthcare professional.", "bot");
             }
         }
-
-
-
-
-
 
         function handleSendMessage() {
             const message = userInput.value.trim();
@@ -336,6 +389,14 @@
 
         // Focus on input when page loads
         userInput.focus();
+
+        // Symptom suggestion chips
+        document.querySelectorAll('.symptom-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                userInput.value = `I'm experiencing ${chip.getAttribute('data-symptom')}. `;
+                userInput.focus();
+            });
+        });
 
         // Auto-resize input
         userInput.addEventListener('input', function() {
