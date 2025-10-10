@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SevaHealthCare AI - Your Virtual Health Assistant</title>
+    <title>CareerPath AI - Your Career Guidance Assistant</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a936f 0%, #88d498 100%);
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -31,7 +31,7 @@
         }
         
         .chat-header {
-            background: #1a936f;
+            background: #3498db;
             color: white;
             padding: 20px;
             text-align: center;
@@ -52,17 +52,17 @@
             font-size: 14px;
         }
         
-        .doctor-icon {
+        .career-icon {
             font-size: 28px;
         }
         
         .disclaimer {
-            background: #fff3cd;
-            color: #856404;
+            background: #e8f4fc;
+            color: #2c3e50;
             padding: 10px 15px;
             font-size: 12px;
             text-align: center;
-            border-bottom: 1px solid #ffeaa7;
+            border-bottom: 1px solid #b8daff;
         }
         
         #chat-box {
@@ -88,22 +88,22 @@
         }
         
         .user {
-            background: #007bff;
+            background: #2980b9;
             color: white;
             margin-left: auto;
             border-bottom-right-radius: 5px;
         }
         
         .bot {
-            background: #e9f7ef;
-            color: #1a936f;
+            background: #e8f4fc;
+            color: #2c3e50;
             margin-right: auto;
             border-bottom-left-radius: 5px;
-            border-left: 3px solid #1a936f;
+            border-left: 3px solid #3498db;
         }
         
         .typing {
-            background: #e9f7ef;
+            background: #e8f4fc;
             color: #718096;
             font-style: italic;
             margin-right: auto;
@@ -129,12 +129,12 @@
         }
         
         #user-input:focus {
-            border-color: #1a936f;
+            border-color: #3498db;
         }
         
         #send-btn {
             padding: 12px 24px;
-            background: #1a936f;
+            background: #3498db;
             color: white;
             border: none;
             border-radius: 25px;
@@ -147,7 +147,7 @@
         }
         
         #send-btn:hover {
-            background: #147a5f;
+            background: #2980b9;
         }
         
         #send-btn:disabled {
@@ -161,16 +161,16 @@
             border: 1px solid #feb2b2;
         }
         
-        .symptom-suggestions {
+        .career-suggestions {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 10px;
         }
         
-        .symptom-chip {
-            background: #e9f7ef;
-            color: #1a936f;
+        .career-chip {
+            background: #e8f4fc;
+            color: #2c3e50;
             padding: 6px 12px;
             border-radius: 20px;
             font-size: 14px;
@@ -178,19 +178,19 @@
             transition: all 0.2s;
         }
         
-        .symptom-chip:hover {
-            background: #1a936f;
+        .career-chip:hover {
+            background: #3498db;
             color: white;
         }
         
-        /* Medical response styling */
+        /* Career response styling */
         .step-container {
             margin: 15px 0;
         }
         
         .step-title {
             font-weight: bold;
-            color: #1a936f;
+            color: #3498db;
             margin-bottom: 8px;
             font-size: 16px;
         }
@@ -219,7 +219,57 @@
         .follow-up-question {
             margin-top: 15px;
             font-weight: bold;
-            color: #1a936f;
+            color: #3498db;
+        }
+        
+        /* Career path visualization */
+        .career-path {
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .career-path-title {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .path-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .path-step-number {
+            background: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        /* Skills section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        
+        .skill-tag {
+            background: #e8f4fc;
+            color: #2c3e50;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 12px;
         }
         
         /* Scrollbar styling */
@@ -240,7 +290,7 @@
             background: #a8a8a8;
         }
         
-        .medical-icon {
+        .career-icon {
             display: inline-block;
             margin-right: 5px;
         }
@@ -254,7 +304,7 @@
                 max-width: 90%;
             }
             
-            .symptom-suggestions {
+            .career-suggestions {
                 justify-content: center;
             }
         }
@@ -263,33 +313,33 @@
 <body>
     <div class="chat-container">
         <div class="chat-header">
-            <h1><span class="doctor-icon">👨‍⚕️</span> Seva AI</h1>
-            <p>Your Virtual Health Assistant - Here to help with medical questions</p>
+            <h1><span class="career-icon">💼</span> CareerPath AI</h1>
+            <p>Your Career Guidance Assistant - Helping you find your ideal career path</p>
         </div>
         
         <div class="disclaimer">
-            <strong>Important:</strong> This is an AI assistant for informational purposes only. 
-            It is not a substitute for professional medical advice. Always consult a healthcare provider for medical concerns.
+            <strong>Important:</strong> This is an AI assistant for career guidance purposes only. 
+            It is not a substitute for professional career counseling. Always consult with career advisors for important decisions.
         </div>
         
         <div id="chat-box">
             <div class="message bot">
-                <span class="medical-icon">👋</span> Hello! I'm Dr. Seva AI, your virtual health assistant. 
-                I'm here to help answer your medical questions, provide health information, and offer general wellness advice.
+                <span class="career-icon">👋</span> Hello! I'm CareerPath AI, your virtual career guidance assistant. 
+                I'm here to help you explore career options, identify your strengths, and plan your professional development.
                 <br><br>
-                <strong>How can I assist with your health concerns today?</strong>
-                <div class="symptom-suggestions">
-                    <div class="symptom-chip" data-symptom="headache">Headache</div>
-                    <div class="symptom-chip" data-symptom="fever">Fever</div>
-                    <div class="symptom-chip" data-symptom="cough">Cough</div>
-                    <div class="symptom-chip" data-symptom="stomach pain">Stomach Pain</div>
+                <strong>How can I assist with your career journey today?</strong>
+                <div class="career-suggestions">
+                    <div class="career-chip" data-career="career change">Career Change</div>
+                    <div class="career-chip" data-career="skills assessment">Skills Assessment</div>
+                    <div class="career-chip" data-career="job search">Job Search</div>
+                    <div class="career-chip" data-career="education path">Education Path</div>
                 </div>
             </div>
         </div>
         
         <div class="input-container">
-            <input type="text" id="user-input" placeholder="Describe your symptoms or ask a health question..." autocomplete="off">
-            <button id="send-btn"><span>Send</span> 💊</button>
+            <input type="text" id="user-input" placeholder="Tell me about your career interests, skills, or goals..." autocomplete="off">
+            <button id="send-btn"><span>Send</span> 🚀</button>
         </div>
     </div>
 
@@ -306,23 +356,28 @@
             'gemini-2.5-flash'
         ];
 
-        // Medical context prompt with step-by-step formatting instructions
-        const MEDICAL_PROMPT = `You are Dr. Seva AI, a professional and empathetic virtual healthcare assistant. Follow these guidelines strictly:
+        // Career context prompt with step-by-step formatting instructions
+        const CAREER_PROMPT = `You are CareerPath AI, a professional and encouraging career guidance assistant. Follow these guidelines strictly:
 
-1. ONLY answer health and medical-related questions
-2. If asked about non-medical topics, politely respond: "I'm specialized in healthcare and can only answer medical questions. Is there a health concern I can help with?"
-3. Provide accurate, evidence-based medical information
-4. Always include a disclaimer that you're an AI and not a substitute for professional medical care
+1. ONLY answer career, education, and professional development-related questions
+2. If asked about non-career topics, politely respond: "I'm specialized in career guidance and can only answer career-related questions. Is there a career concern I can help with?"
+3. Provide practical, evidence-based career advice
+4. Always include a disclaimer that you're an AI and not a substitute for professional career counseling
 5. Structure your responses in CLEAR, NUMBERED STEPS with proper formatting
 6. Use HTML-like tags for structure but render them as plain text:
    - Use **Step 1: Title** for each step
    - Use bullet points with * for lists
-   - Use **Important Note:** for warnings
+   - Use **Important Note:** for important considerations
    - Use **Follow-up Question:** at the end
-7. Be empathetic and reassuring in your tone
-8. Suggest seeing a doctor for serious symptoms
+7. Be encouraging and supportive in your tone
+8. Suggest consulting with career advisors for important decisions
 9. Keep responses clear and concise but thorough enough to be helpful
 10. End most responses with a relevant follow-up question to continue the conversation
+11. When discussing career paths, include:
+    - Required skills and qualifications
+    - Potential career progression
+    - Industry outlook and salary expectations
+    - Recommended resources or next steps
 
 Current user question: `;
 
@@ -332,7 +387,7 @@ Current user question: `;
             
             if (sender === "bot") {
                 // Format the bot's response with proper styling
-                msg.innerHTML = formatMedicalResponse(text);
+                msg.innerHTML = formatCareerResponse(text);
             } else {
                 msg.textContent = text;
             }
@@ -341,7 +396,7 @@ Current user question: `;
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function formatMedicalResponse(text) {
+        function formatCareerResponse(text) {
             // Convert the AI's response to properly formatted HTML
             let formattedText = text;
             
@@ -358,13 +413,16 @@ Current user question: `;
             // Format follow-up questions
             formattedText = formattedText.replace(/\*\*Follow-up Question:\*\* (.*?)(?=\n\n|$)/s, '<div class="follow-up-question">Follow-up Question: $1</div>');
             
+            // Format career paths
+            formattedText = formattedText.replace(/\*\*Career Path:\*\* (.*?)(?=\n\n|\n\*\*|$)/s, '<div class="career-path"><div class="career-path-title">Career Path: $1</div>');
+            
             return formattedText;
         }
 
         function showTypingIndicator() {
             const typing = document.createElement("div");
             typing.classList.add("message", "typing");
-            typing.textContent = "Dr. MediCare AI is thinking...";
+            typing.textContent = "CareerPath AI is thinking...";
             typing.id = "typing-indicator";
             chatBox.appendChild(typing);
             chatBox.scrollTop = chatBox.scrollHeight;
@@ -387,7 +445,7 @@ Current user question: `;
                     },
                     body: JSON.stringify({
                         contents: [{
-                            parts: [{ text: MEDICAL_PROMPT + message }]
+                            parts: [{ text: CAREER_PROMPT + message }]
                         }],
                         generationConfig: {
                             temperature: 0.7,
@@ -399,7 +457,7 @@ Current user question: `;
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help with your health concerns. Could you please tell me more about your symptoms?";
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "I'm here to help with your career questions. Could you please tell me more about your interests, skills, or career goals?";
                 } else {
                     const errorData = await response.json();
                     console.error(`API Error for ${model}:`, errorData);
@@ -415,7 +473,7 @@ Current user question: `;
             showTypingIndicator();
             sendBtn.disabled = true;
 
-            let botReply = "I'm currently experiencing technical difficulties. Please try again in a moment or consult a healthcare provider for urgent concerns.";
+            let botReply = "I'm currently experiencing technical difficulties. Please try again in a moment or consult a career advisor for immediate guidance.";
             let success = false;
 
             // Try each API endpoint until one works
@@ -434,7 +492,7 @@ Current user question: `;
             sendBtn.disabled = false;
 
             if (!success) {
-                appendMessage("💡 <strong>Technical Note:</strong> Please ensure your API key is valid and you have access to Gemini API models. For immediate health concerns, please contact a healthcare professional.", "bot");
+                appendMessage("💡 <strong>Technical Note:</strong> Please ensure your API key is valid and you have access to Gemini API models. For immediate career guidance, please contact a career advisor.", "bot");
             }
         }
 
@@ -459,10 +517,10 @@ Current user question: `;
         // Focus on input when page loads
         userInput.focus();
 
-        // Symptom suggestion chips
-        document.querySelectorAll('.symptom-chip').forEach(chip => {
+        // Career suggestion chips
+        document.querySelectorAll('.career-chip').forEach(chip => {
             chip.addEventListener('click', () => {
-                userInput.value = `I'm experiencing ${chip.getAttribute('data-symptom')}. `;
+                userInput.value = `I need help with ${chip.getAttribute('data-career')}. `;
                 userInput.focus();
             });
         });
